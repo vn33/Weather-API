@@ -3,10 +3,11 @@ import pandas as pd
 
 app = Flask(__name__)
 
-
+stations = pd.read_csv("data_small/stations.txt", skiprows=17)
+stations = stations[['STAID', 'STANAME                                 ']]
 @app.route("/")
 def home():
-    return render_template("home.html")
+    return render_template("home.html", data=stations.to_html())
 
 
 @app.route("/translator")
@@ -26,16 +27,12 @@ def about(station, date):
 
 # @app.route("/api/v1/<word>")
 # def info(word):
-#     if word == str('sun'):
-#         return {
-#                 "definition": word.upper(),
-#                 "word": "sun"
-#             }
-#     else:
-#         return {
-#             "definition": "hello",
-#             "word": "word"
-#         }
+#     df = pd.read_csv("dictionary.csv")
+#     definition = df.loc[df['word'] == word]['definition'].squeeze()
+#     return {
+#         "definition": definition,
+#         "word": word
+#     }
 
 
 if __name__ == "__main__":
